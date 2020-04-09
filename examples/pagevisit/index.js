@@ -18,7 +18,10 @@ class LogStorage extends stream.Writable {
 }
 
 app.use(new Kowalski({
-  informationToCollect: [Kowalski.Information.PageVisit], // PageVisit instances will be emitted to storages
+  informationToCollect: [
+    Kowalski.Information.PageVisit, // track page visits
+    Kowalski.Information.UTM // track campaign stuff
+  ],
   storages: [new LogStorage()]
 }))
 
