@@ -1,2 +1,4 @@
 node_modules
+jsdoc
+coverage
 yarn.lock

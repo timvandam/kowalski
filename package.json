@@ -21,6 +21,10 @@
   },
   "scripts": {
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "doc": "jsdoc lib/ -r README.md -d jsdoc"
+  },
+  "dependencies": {
+    "ezerrors": "^1.0.1"
   }
 }
