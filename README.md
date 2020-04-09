@@ -1,2 +1,2 @@
 # kowalski
-Express web analytics middleware
+Pluggable Express web analytics
