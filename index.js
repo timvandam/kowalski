@@ -1,1 +1,1 @@
-module.exports = require('./lib/kowalski')
+module.exports = require('./lib/Kowalski')
