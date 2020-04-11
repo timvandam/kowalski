@@ -26,6 +26,6 @@ module.exports = class extends Kowalski.Information {
       if (!serialized[path]) serialized[path] = 0
       serialized[path]++
     })
-    return [serialized]
+    return [new Kowalski.Statistic('Visits per page', serialized)]
   }
 }

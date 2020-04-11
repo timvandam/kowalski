@@ -40,6 +40,21 @@ module.exports = class extends Kowalski.Information {
   }
 
   static serializeInformation (information) {
-    return information
+    const countPerSource = {}
+    const countPerCampaign = {}
+    const countPerPath = {}
+    information.forEach(info => {
+      if (!countPerSource[info.source]) countPerSource[info.source] = 0
+      countPerSource[info.source]++
+      if (!countPerCampaign[info.campaign]) countPerCampaign[info.campaign] = 0
+      countPerCampaign[info.campaign]++
+      if (!countPerPath[info.path]) countPerPath[info.path] = 0
+      countPerPath[info.path]++
+    })
+    return [
+      new Kowalski.Statistic('Visitors per source', countPerSource),
+      new Kowalski.Statistic('Visitors per campaign', countPerCampaign),
+      new Kowalski.Statistic('Visitors per path', countPerPath)
+    ]
   }
 }

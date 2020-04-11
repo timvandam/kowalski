@@ -10,22 +10,23 @@ const app = express()
 // Saves data to a mongodb db
 const mongoStorage = class extends Kowalski.Storage {
   // Storages receive all informationToCollect classes so they can create schemas/models
-  constructor (informationToCollect) {
-    super()
+  constructor (informationTypes) {
+    super(informationTypes)
     this.connection = mongoose.createConnection('mongodb://localhost/kowalski_analytics', {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
-    for (const Information of informationToCollect) this.connection.model(Information.name, new mongoose.Schema({}, { strict: false }))
+    for (const Information of this.informationTypes.values()) this.connection.model(Information.name, new mongoose.Schema({}, { strict: false }))
   }
 
-  _getInformation (Information, start, end) {
-    return this.connection.model(Information.name).find({
+  async _getInformation (Information, start, end) {
+    const docs = await this.connection.model(Information.name).find({
       date: {
         $gt: start,
         $lt: end
       }
-    }).then(docs => docs.map(doc => doc.toObject()))
+    })
+    return docs.map(doc => doc.toObject())
   }
 
   _write (data, encoding, done) {
@@ -35,14 +36,11 @@ const mongoStorage = class extends Kowalski.Storage {
 }
 
 app.use(new Kowalski({
-  informationToCollect: [
-    PageVisit, // track page visits
-    UTM // track campaign stuff
-  ],
+  informationToCollect: [PageVisit, UTM],
   storage: mongoStorage
 }))
 
-app.get('/stats/:stat', (req, res, next) => req.kowalski.storages[0].getInformation(req.params.stat).then(result => res.json(result)))
+app.get('/stats/:stat', (req, res, next) => req.kowalski.storage.getInformation(req.params.stat).then(result => res.json(result)))
 app.get('/hello/world', (req, res, next) => res.send('hello world!'))
 
 app.listen(8080, () => console.log('Now listening on port 8080'))
