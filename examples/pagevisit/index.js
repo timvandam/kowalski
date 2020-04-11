@@ -6,7 +6,7 @@ const Kowalski = require('../../')
 const app = express()
 
 // Saves data to a mongodb db
-const mongoStorage = Storage => class extends Storage {
+const mongoStorage = class extends Kowalski.Storage {
   // Storages receive all informationToCollect classes so they can create schemas/models
   constructor (informationToCollect) {
     super()
