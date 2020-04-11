@@ -17,13 +17,19 @@ const mongoStorage = Storage => class extends Storage {
     for (const Information of informationToCollect) this.connection.model(Information.name, new mongoose.Schema({}, { strict: false }))
   }
 
-  getInformation (name, start, end) {
-    //
+  _getInformation (Information, start, end) {
+    return this.connection.model(Information.name).find({
+      date: {
+        $gt: start,
+        $lt: end
+      }
+    }).then(docs => docs.map(doc => doc.toObject()))
   }
 
   _write (data, encoding, done) {
     const Model = this.connection.model(data.constructor.name)
     Model.create(data.getInformation(), error => done(error))
+    this.getInformation('kowalski:utm').then(console.log)
   }
 }
 
