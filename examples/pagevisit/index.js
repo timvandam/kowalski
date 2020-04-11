@@ -44,7 +44,7 @@ app.use(new Kowalski({
 }))
 
 app.use(express.static(path.resolve(__dirname, '../../../kowalski-ui/build')))
-app.use('/kowalski/api', kowalskiApi)
+app.use('/kowalski', kowalskiApi)
 
 app.get('/hello/world', (req, res, next) => res.send('hello world!'))
 
