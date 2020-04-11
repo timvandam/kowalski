@@ -1,4 +1,4 @@
-const Kowalski = require('../../')
+const Kowalski = require('../../../')
 
 module.exports = class extends Kowalski.Information {
   static get name () {

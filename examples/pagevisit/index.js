@@ -2,6 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 
 const Kowalski = require('../../')
+const PageVisit = require('./InformationTypes/PageVisit')
+const UTM = require('./InformationTypes/UTM')
 
 const app = express()
 
@@ -29,19 +31,18 @@ const mongoStorage = class extends Kowalski.Storage {
   _write (data, encoding, done) {
     const Model = this.connection.model(data.constructor.name)
     Model.create(data.getInformation(), error => done(error))
-    this.getInformation('kowalski:utm').then(console.log)
   }
 }
 
 app.use(new Kowalski({
   informationToCollect: [
-    Kowalski.Information.PageVisit, // track page visits
-    Kowalski.Information.UTM // track campaign stuff
+    PageVisit, // track page visits
+    UTM // track campaign stuff
   ],
-  storages: [mongoStorage]
+  storage: mongoStorage
 }))
 
-app.get('/hello', (req, res, next) => res.send('hi!'))
+app.get('/stats/:stat', (req, res, next) => req.kowalski.storages[0].getInformation(req.params.stat).then(result => res.json(result)))
 app.get('/hello/world', (req, res, next) => res.send('hello world!'))
 
 app.listen(8080, () => console.log('Now listening on port 8080'))
