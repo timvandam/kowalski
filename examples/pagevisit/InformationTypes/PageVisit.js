@@ -19,7 +19,6 @@ module.exports = class extends Kowalski.Information {
   }
 
   static serializeInformation (information) {
-    // TODO: Return an array of Statistic class instances instead (should be provided as parameter)
     const serialized = {}
     information.forEach(info => {
       const { path } = info
