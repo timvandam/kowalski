@@ -1,9 +1,12 @@
+const path = require('path')
+
 const express = require('express')
 const mongoose = require('mongoose')
 
 const Kowalski = require('../../')
 const PageVisit = require('./InformationTypes/PageVisit')
 const UTM = require('./InformationTypes/UTM')
+const kowalskiApi = require('../../../kowalski-api')
 
 const app = express()
 
@@ -40,7 +43,9 @@ app.use(new Kowalski({
   storage: mongoStorage
 }))
 
-app.get('/stats/:stat', (req, res, next) => req.kowalski.storage.getInformation(req.params.stat).then(result => res.json(result)))
+app.use(express.static(path.resolve(__dirname, '../../../kowalski-ui/build')))
+app.use('/kowalski/api', kowalskiApi)
+
 app.get('/hello/world', (req, res, next) => res.send('hello world!'))
 
 app.listen(8080, () => console.log('Now listening on port 8080'))
