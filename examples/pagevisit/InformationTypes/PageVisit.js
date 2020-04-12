@@ -11,20 +11,14 @@ module.exports = class extends Kowalski.Information {
     this.path = req.path
   }
 
-  _getInformation () {
+  get _data () {
     return {
       method: this.method,
       path: this.path
     }
   }
 
-  static serializeInformation (information) {
-    const serialized = {}
-    information.forEach(info => {
-      const { path } = info
-      if (!serialized[path]) serialized[path] = 0
-      serialized[path]++
-    })
-    return [new Kowalski.Statistic('Visits per page', serialized)]
+  static fromObject ({ method, path }) {
+    return Object.assign(Object.create(this.prototype), { method, path })
   }
 }
