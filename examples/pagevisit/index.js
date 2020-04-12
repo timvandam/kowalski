@@ -38,12 +38,13 @@ const mongoStorage = class extends Kowalski.Storage {
   }
 }
 
+app.use(express.static(path.resolve(__dirname, '../../../kowalski-ui/build')))
+
 app.use(new Kowalski({
   informationToCollect: [PageVisit, UTM],
   storage: mongoStorage
 }))
 
-app.use(express.static(path.resolve(__dirname, '../../../kowalski-ui/build')))
 app.use('/kowalski', kowalskiApi)
 
 app.get('/hello/world', (req, res, next) => res.send('hello world!'))
