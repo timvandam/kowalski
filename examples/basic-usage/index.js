@@ -8,7 +8,7 @@ const LogIn = require('./LogIn')
 const app = express()
 
 app.use(new Kowalski({
-  storage: mongooseStorage(), // save analytics in mongodb with mongoose
+  storage: mongooseStorage('mongodb://localhost/kowalski_analytics'), // save analytics in mongodb with mongoose
   informationToCollect: [
     PageVisit, // Collect the PageVisit metric defined in PageVisit.js
     LogIn // Collect the LogIn metric defined in LogIn.js

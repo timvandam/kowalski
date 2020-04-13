@@ -19,6 +19,7 @@ class PageVisit extends Kowalski.Information {
   }
 
   // Define what data should be stored by the storage
+  // Kowalski will automatically inject the current date!
   get data () {
     return {
       path: this.path

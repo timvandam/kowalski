@@ -6,6 +6,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "kowalski-analytics": "^0.0.1",
-    "kowalski-analytics-storage-mongoose": "^1.0.0"
+    "kowalski-analytics-storage-mongoose": "^1.0.2"
   }
 }
